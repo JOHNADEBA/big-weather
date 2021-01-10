@@ -1,9 +1,14 @@
 <template>
-  <main id="addlocation">
-    
-    <h1>addlocation</h1>     
-   
-  </main>
+  <section id="addlocation">
+    <form>
+        <div>
+            <input type="text" placeholder="e.g Ljubljana">
+        </div>
+        <!-- action buttons -->
+        <button >Cancel</button>
+        <button type="submit">Finish</button>
+    </form>
+  </section>
 </template>
 
 <script>

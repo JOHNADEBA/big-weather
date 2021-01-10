@@ -1,9 +1,11 @@
 <template>
-  <main id="location">
+    <section id="location" >
+        <!-- City list start -->
+        <div  >
+           <button > ADD CITY </button>
+        </div>            
     
-    <h1>location</h1>     
-   
-  </main>
+    </section>
 </template>
 
 <script>
