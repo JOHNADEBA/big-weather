@@ -9,7 +9,7 @@
 
 <script>
 
-import Locations from './components/Locations/index'
+import Location from './components/Location'
 
 export default {
   name: 'app',
@@ -26,6 +26,6 @@ export default {
 </script>
 
 <style >
-
+    @import './assets/style.css'
 
 </style>

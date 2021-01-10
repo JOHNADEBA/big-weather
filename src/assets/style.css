@@ -1,0 +1,94 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  background: rgb(220, 213, 213);
+}
+h1 {
+  padding: 1rem;
+  text-align: center;
+}
+.card,
+.cards {
+  margin: 2rem auto;
+  padding: 2rem;
+  border-radius: 1rem;
+  color: #fff;
+  font-weight: bold;
+  text-align: center;
+  background-image: url("https://image.freepik.com/free-photo/blue-sky-with-cloud-clean-energy-power-clear-weather-background_43284-844.jpg");
+}
+.cards {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.3rem;
+}
+.card {
+  width: 50%;
+}
+button {
+  padding: 0.6rem;
+  border: none;
+  cursor: pointer;
+  background: rgb(233, 161, 66);
+  border-radius: 0.2rem;
+  color: #fff;
+  outline: none;
+  margin: 0.5rem;
+}
+button:hover {
+  color: burlywood;
+  background: #fff;
+}
+.location-city {
+  font-size: 2rem;
+
+  padding-bottom: 0.5rem;
+}
+.weather-info {
+  display: flex;
+  justify-content: space-around;
+  padding: 0 1rem 1rem;
+}
+.tempt {
+  font-size: 1.5rem;
+
+  color: rgb(242, 162, 59);
+}
+.humid {
+  font-size: 0.9rem;
+}
+.desc {
+  padding: 1rem 0;
+  color: rgb(108, 23, 187);
+}
+.card-holder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+.btn {
+  margin-left: 3rem;
+}
+.search {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+input {
+  padding: 0.5rem;
+  border-radius: 0.4rem 0 0.4rem 0;
+}
+input:focus {
+  color: #fff;
+  outline: 0;
+
+  background: #000;
+  border: none;
+  border-radius: 0 0.4rem 0 0.4rem;
+}
