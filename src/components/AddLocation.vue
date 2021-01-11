@@ -19,42 +19,70 @@
 
 <script>
     import CallApi from './CallApi'
-    export default {
-    name: 'addlocation',
-    components: {
+
+export default {
+  name: 'add-locations',
+  components: {
     CallApi
   },
-  props: ['cities', 'isShow', 'search-city'],
   data () {
     return {
       cityName:'',
       isShowThird : false,
       url : 'http://api.openweathermap.org/data/2.5/',
       key : 'f499a2f595cddaac83d35435ce89a26e',
-      cityId : []
-    }
-  },
-  watch: {
-    cityName(newcity){
-      localStorage.cityname = JSON.stringify(newcity)
-    }
-  },
-  mounted () {
-    if(localStorage.cityName){
-        this.cityName = JSON.parse (localStorage.cityname)
+      cityId : [],
+
+      idCity : '',
+      area: []
     }
   },
   methods: {
     openCallApiComponent : function (){
        if(this.cityName.length > 0){
-            this.isShowThird = true    
-            }    
+         
+         fetch (`${this.url}weather?q=${this.cityName}&appid=${this.key}&units=metric`)
+        .then(response => response.json())
+        .then(data => {
+          this.save(data.id)
+          });
+
+        this.isShowThird = true
+    
         }
+    },
+
+  save: function(id){
+    console.log('id save === ' + this.idCity)
+
+    if(JSON.parse(localStorage.area ).length !== 0){
+      this.area = JSON.parse (localStorage.area);
+      this.area.push({
+            id : id,
+            name : this.cityName
+    
+            });
+    } else {
+      this.area.push({
+            id : id,
+           name : this.cityName
+    
+         });
     }
+    
+     localStorage.area = JSON.stringify(this.area)
+  },
+
+    getCityIdFromApi : function (){
+      fetch (`${this.url}weather?q=${this.cityName}&appid=${this.key}&units=metric`)
+     .then(response => response.json())
+     .then(data => {
+       return data.id
+       });
+    },
+          
   }
+}
+
 </script>
 
-<style >
-
-
-</style>

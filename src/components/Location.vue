@@ -1,14 +1,19 @@
 <template>
-    <section id="location" >
-        <!-- Refresh button-->
-        <button @click='close()'>
-            <i class="fas fa-sync"></i>
-        </button>
+    <section id="location" >     
 
         <!-- City list start -->
         <div v-if =  'isShow && !cityDetails' >
-            <div class= 'card-holder'>
-                <div  v-for='city in this.myCities' :key='city.id' >
+            <!-- Refresh button-->
+            <div class="arrange-btn">
+                 <button @click='refresh()' class="btn2">
+                    <i class="fas fa-sync"></i>
+                </button>
+
+                <button class="btn" @click='openAddLocationComponent'>ADD CITY</button>
+            </div>   
+            <p v-if='!area.length'> No city Added yet</p>
+            <div v-if='area.length' class= 'card-holder'>
+                <div  v-for='city in area' :key='city.id' >
 
                     <div @click ='showCityWeatherDetails(city.name) ' class= 'cards fx'>
                     {{city.name}} <span>{{Math.round(city.main.temp)}}&deg;C</span>
@@ -16,8 +21,6 @@
 
                 </div>
             </div>
-
-            <button class="btn" @click='openAddLocationComponent'>ADD CITY</button>
 
         </div>
 
@@ -41,67 +44,82 @@
     import CallApi from './CallApi'
 
     export default {
-        name: 'location',
-        components: {
+    
+    name: 'location',
+    components: {
         AddLocation,
         CallApi
-        },
-  
-        data () {
-            return {
-            isShow : true,
-            citiesIds: ['2332453', '3173435', '3117735', '3196359'],
-            myCities: [],
-            url : 'http://api.openweathermap.org/data/2.5/',
-            key : 'f499a2f595cddaac83d35435ce89a26e',
-            cityDetails : false,
-            cityName : ''
+    },
+    
+    
+    data () {
+        return {
+        isShow : true,
+        citiesIds: ['2332453', '3196359'],
+        myCities: [],
+        url : 'http://api.openweathermap.org/data/2.5/',
+        key : 'f499a2f595cddaac83d35435ce89a26e',
+        cityDetails : false,
+        cityName : '',
+        area : []
 
-            }
-        },
-        computed: {
-
-        },
-        mounted () {
-            let ids = this.getCitiesIds();
-            this.callApi(ids);
-        },
+        }
+    },
+    
+    mounted () {
+        if(localStorage.area){
+        this.area = JSON.parse(localStorage.area)
+        console.log('Found')
+        }else{
+        console.log('not found')
+        localStorage.area = JSON.stringify([])
+        }
+        this.callApi();
         
-        methods: {
-            openAddLocationComponent : function (){
-            this.isShow = !this.isShow
-            },
-
-            callApi :  function (ids){
-                console.log('call');
-                fetch (`${this.url}group?id=${ids}&appid=${this.key}&units=metric`)
-                .then(response => response.json())
-                .then(data => {
-                this.myCities = data.list
-                console.log(data)
-                
-                });
-            },
+    },
+    
+    
+    methods: {
         
-            showCityWeatherDetails : function(cityName){
-            this.cityDetails = true
-            this.cityName = cityName
-            },
+        openAddLocationComponent : function (){
+        this.isShow = !this.isShow
+        },
 
-            close : function (){
-            this.cityDetails = false;
-            this.isShow = true;
-            },
+        callApi :  function (){
+        console.log(this.area)
 
-            getCitiesIds: function(){
-            return this.citiesIds
-            },
-    }
+        var results = [];
+            for(var i=0; i<this.area.length; i++) {
             
-}
+            results.push(this.area[i].id)
+            
+            }
+        
+        fetch (`${this.url}group?id=${results}&appid=${this.key}&units=metric`)
+        .then(response => response.json())
+        .then(data => {
+            this.area = data.list       
+            });
+        },
+    
+        showCityWeatherDetails : function(cityName){
+        this.cityDetails = true;
+        this.cityName = cityName
+        
+        },
+
+        close : function (){
+        this.cityDetails = false;
+        this.isShow = true;
+        },
+
+        refresh : function(){
+        this.callApi();
+        
+        },
+    
+      }
+    
+    }
+
 </script>
-
-<style >
-
-
-</style>
